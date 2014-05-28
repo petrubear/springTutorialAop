@@ -11,15 +11,18 @@ public class App {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"emg/demos/spring/aop/beans.xml");
 
-		Camera camera = (Camera) context.getBean("camera");
+		ICamera camera = (ICamera) context.getBean("camera");
 		try {
 			camera.snap();
+			camera.snap(100);
+			camera.snap("kito");
+			camera.snapNightTime();
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
 
-		// Lens lens = (Lens)context.getBean("lens");
-		// lens.zoom(5);
+		Lens lens = (Lens)context.getBean("lens");
+		lens.zoom(5);
 		((ClassPathXmlApplicationContext) context).close();
 	}
 
