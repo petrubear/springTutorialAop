@@ -1,5 +1,7 @@
 package emg.demos.spring.aop;
 
+import emg.demos.spring.aop.camera.accesories.Lens;
+
 public interface ICamera {
 
 	public abstract void snap() throws Exception;
@@ -10,4 +12,5 @@ public interface ICamera {
 
 	public abstract void snapNightTime();
 
+	public abstract void changeLens(Lens lens);
 }

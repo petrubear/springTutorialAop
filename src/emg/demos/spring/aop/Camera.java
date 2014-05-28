@@ -2,6 +2,8 @@ package emg.demos.spring.aop;
 
 import org.springframework.stereotype.Component;
 
+import emg.demos.spring.aop.camera.accesories.Lens;
+
 @Component("camera")
 public class Camera implements ICamera {
 	/* (non-Javadoc)
@@ -36,5 +38,9 @@ public class Camera implements ICamera {
 	@Override
 	public void snapNightTime() {
 		System.out.println("Snap Camera - NightTime");
+	}
+	
+	public void changeLens(Lens lens){
+		System.out.println("Snap Camera - changeLens");
 	}
 }

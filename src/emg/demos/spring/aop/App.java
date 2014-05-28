@@ -17,6 +17,7 @@ public class App {
 			camera.snap(100);
 			camera.snap("kito");
 			camera.snapNightTime();
+			camera.changeLens(new Lens());
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
 		}
