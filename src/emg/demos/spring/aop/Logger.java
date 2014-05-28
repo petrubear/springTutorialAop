@@ -1,5 +1,10 @@
 package emg.demos.spring.aop;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -9,38 +14,43 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class Logger {
 
-	//@Pointcut("execution(void emg.demos.spring.aop.Camera.snap(..))")
-	@Pointcut("execution(* emg.demos.spring.aop.Camera.*(..))")
-	//@Pointcut("execution(* emg.demos.spring.aop.*.*(..))")
-	// (..) es un wildcard para parametros
-	//Camera.* es un wildcard para el nombre del metodo (todos = *)
-	// (*) es un wildcard para el valor de retorno
+	@Pointcut("execution(* emg.demos.spring.aop.Camera.snap())")
 	public void cameraSnap() {
-
-	}
-	
-	@Pointcut("execution(* emg.demos.spring.aop.Camera.snap(String))")
-	public void cameraSnapName() {
-
-	}
-
-	@Pointcut("execution(* *.*(..))") //any return, any class, any method
-	public void cameraRelatedAction() {
 
 	}
 
 	@Before("cameraSnap()")
-	public void aboutToTakePhoto() {
-		System.out.println("about to take photo!");
+	public void beforeAdvice() {
+		System.out.println("before advice ...");
+	}
+
+	@After("cameraSnap()")
+	// se ejecuta si el metodo da error o no
+	public void afterAdvice() {
+		System.out.println("after advice ...");
+	}
+
+	@AfterReturning("cameraSnap()")
+	// se ejecuta si el metodo NO da error
+	public void afterReturningAdvice() {
+		System.out.println("after returning advice ...");
 	}
 	
-	@Before("cameraSnapName()")
-	public void aboutToTakePhotoWithNAme() {
-		System.out.println("about to take photo with name!");
+	@AfterThrowing("cameraSnap()")
+	// se ejecuta si el metodo da error
+	public void afterThrowingAdvice() {
+		System.out.println("after throwing advice ...");
 	}
 	
-	@Before("cameraRelatedAction()")
-	public void aboutTodoCameraRelatedAction() {
-		System.out.println("about to do something!");
+	@Around("cameraSnap()")
+	// se ejecuta si el metodo da error
+	public void afterAroundAdvice(ProceedingJoinPoint p) {
+		System.out.println("around advice ... before");
+		try {
+			p.proceed();
+		} catch (Throwable e) {
+			System.err.println("In around advice: " + e);
+		}
+		System.out.println("around advice ... after");
 	}
 }

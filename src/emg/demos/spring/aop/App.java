@@ -12,13 +12,14 @@ public class App {
 				"emg/demos/spring/aop/beans.xml");
 
 		Camera camera = (Camera) context.getBean("camera");
-		camera.snap();
-		camera.snap(1000);
-		camera.snap("oosakajyu");
-		camera.snapNightTime();
-		
-		Lens lens = (Lens)context.getBean("lens");
-		lens.zoom(5);
+		try {
+			camera.snap();
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+		}
+
+		// Lens lens = (Lens)context.getBean("lens");
+		// lens.zoom(5);
 		((ClassPathXmlApplicationContext) context).close();
 	}
 
